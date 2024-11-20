@@ -4,8 +4,8 @@ from ..persistence import repositories
 from ..utilities import translator
 from django.contrib.auth import get_user
 from ..transport import getAllImages
-from utilities.card import Card
-from utilities.translator import fromRequestIntoCard
+from ..utilities.card import Card
+from ..utilities.translator import fromRequestIntoCard
 
 def getAllImages(input=None):
     # obtiene un listado de datos "crudos" desde la API, usando a transport.py.
