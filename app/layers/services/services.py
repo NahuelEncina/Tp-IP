@@ -7,7 +7,7 @@ from app.layers.transport.transport import getAllImages
 
 def getAllImages(input=None):
     # obtiene un listado de datos "crudos" desde la API, usando a transport.py.
-    json_collection = getAllImages(input)
+    json_collection = getAllImages (input)
 
     # recorre cada dato crudo de la colección anterior, lo convierte en una Card y lo agrega a images.
     images = []

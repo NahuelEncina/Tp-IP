@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from .layers.services import services
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
-from .layers.services.services import getAllImages 
+from app.layers.services.services import getAllImages 
 
 def index_page(request):
     return render(request, 'index.html')
@@ -13,7 +13,7 @@ def index_page(request):
 # si el opcional de favoritos no está desarrollado, devuelve un listado vacío.
 
 def home(request): 
-    images = getAllImages ()
+    images = getAllImages()
     favourite_list = []
 
     return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list })
