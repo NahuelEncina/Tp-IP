@@ -4,11 +4,7 @@ from ..persistence import repositories
 from ..utilities import translator
 from django.contrib.auth import get_user
 from app.layers.transport.transport import getAllImages
-<<<<<<< HEAD
-from ..transport.transport import getAllImages
-=======
 
->>>>>>> 0e06c1d30362fa5dee1b30be18a9082de783da31
 def getAllImages(input=None):
     # obtiene un listado de datos "crudos" desde la API, usando a transport.py.
     json_collection = getAllImages(input)
