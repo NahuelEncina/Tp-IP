@@ -38,12 +38,9 @@
         {% else %} {% for img in images %}
         <div class="col">
             <div class="card mb-3 ms-5"
-            {% if img.status == 'Alive' %}
-                    border: 2px solid green; {% endif %} 
-            {% elif img.status == 'Dead' %}
-                    border: 2px solid red; {% endif %}
-            {% else %} 
-                  border:2px solid orange; {% endif %}
+            {% if img.status == 'Alive' %} border-success 
+            {% elif img.status == 'Dead' %} border-danger
+            {% else %} border-warning
             {% endif %}
             style="background-color:#d5dbdb; color:#4c6783; max-width: 540px;">
     
