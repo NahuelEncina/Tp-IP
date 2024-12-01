@@ -37,11 +37,11 @@
         <h2 class="text-center">La búsqueda no arrojó resultados...</h2>
         {% else %} {% for img in images %}
         <div class="col">
-            <div class="card mb-3 ms-5"
+            <div class="card mb-3 ms-5
             {% if img.status == 'Alive' %} border-success 
             {% elif img.status == 'Dead' %} border-danger
             {% else %} border-warning
-            {% endif %}
+            {% endif %}""
             style="background-color:#d5dbdb; color:#4c6783; max-width: 540px;">
     
                 <div class="row g-0">
