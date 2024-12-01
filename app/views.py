@@ -51,4 +51,5 @@ def deleteFavourite(request):
 
 @login_required
 def exit(request):
-    pass
+      logout(request)  # Cierra la sesión del usuario
+      return redirect('index-page')  # Redirige a la página de inicio
