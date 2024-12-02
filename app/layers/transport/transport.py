@@ -3,16 +3,24 @@
 import requests
 from ...config import config
 
-# comunicación con la REST API.
-# este método se encarga de "pegarle" a la API y traer una lista de objetos JSON crudos (raw).
-def getAllImages(input=None):
-    if input is None:
-        json_response = requests.get(config.DEFAULT_REST_API_URL).json()
-    else:
-        json_response = requests.get(config.DEFAULT_REST_API_SEARCH + input).json()
 
-    json_collection = []
+BASE_URL = "https://rickandmortyapi.com/api/character/"
 
+def getAllImages(page=1, query=""):
+    params = {
+        "page": page,
+        "name": query, 
+    }
+
+   
+    response = requests.get(BASE_URL, params=params)
+
+   
+    if response.status_code != 200:
+        return {"results": [], "info": {"pages": 1}}
+
+    return response.json()
+    
     # si la búsqueda no arroja resultados, entonces retornamos una lista vacía de elementos.
     if 'error' in json_response:
         print("[transport.py]: la búsqueda no arrojó resultados.")

@@ -32,7 +32,7 @@ def fromRepositoryIntoCard(repo_dict):
                         url=repo_dict['url'],
                         name=repo_dict['name'],
                         status=repo_dict['status'],
-                        last_location=repo_dict['last_location'],
+                        last_location=repo_dict["last_location"],
                         first_seen=repo_dict['first_seen'],
                 )
     return card

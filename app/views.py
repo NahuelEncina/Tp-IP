@@ -5,6 +5,7 @@ from .layers.services import services
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from app.layers.services.services import getAllImages 
+from django.shortcuts import render
 
 def index_page(request):
     return render(request, 'index.html')
@@ -13,24 +14,29 @@ def index_page(request):
 # si el opcional de favoritos no está desarrollado, devuelve un listado vacío.
 
 def home(request): 
-    images = getAllImages()
     favourite_list = []
+    
+    page = int(request.GET.get("page", 1))
+    query = request.GET.get("query", "")
 
-    return render(request, 'home.html', { 'images': images, 'favourite_list': favourite_list })
+ 
+    data = getAllImages(page=page, query=query)
+    images = data["images"]
+    total_pages = data["total_pages"]
+
+    
+    return render(request, "home.html", {
+        "images": images,
+        "current_page": page,
+        "total_pages": range(1, total_pages + 1), 
+        "query": query, 
+    })
+
 
 def search(request):
     search_msg = request.POST.get('query', '')
-
-    # si el texto ingresado no es vacío, trae las imágenes y favoritos desde services.py,
-    # y luego renderiza el template (similar a home).
-    if (search_msg != ''):
-        images = services.getAllImages(search_msg)
-        favourite_list = services.getAllImages(search_msg) 
-        return render(request, 'home.html',{
-            'images': images,
-            'favourite_list': favourite_list,
-            'search_msg': search_msg
-        })
+    if search_msg != '':
+        return redirect(f"/home?query={search_msg}&page=1")
     else:
         return redirect('home')
 
@@ -38,12 +44,14 @@ def search(request):
 # Estas funciones se usan cuando el usuario está logueado en la aplicación.
 @login_required
 def getAllFavouritesByUser(request):
-    favourite_list = []
-    return render(request, 'favourites.html', { 'favourite_list': favourite_list })
+       favourite_list = services.getAllFavourites(request)
+       return render(request, 'favourites.html', { 'favourite_list': favourite_list })
 
 @login_required
 def saveFavourite(request):
-    pass
+    if request.method == 'POST':
+        services.saveFavourite(request)
+    return redirect('home')
 
 @login_required
 def deleteFavourite(request):

@@ -3,34 +3,43 @@
     <h1 class="text-center">Buscador Rick & Morty</h1>
 
     <div class="d-flex justify-content-end" style="margin-bottom: 1%; margin-right: 2rem;">
-        <!-- Selector de página -->
-        <nav aria-label="...">
-            <ul class="pagination">
-                <li class="page-item disabled">
-                    <a class="page-link">⬅️</a>
-                </li>
-                <li class="page-item active" aria-current="page">
-                    <a class="page-link" href="#">1</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="#">2</a>
-                </li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item">
-                    <a class="page-link" href="#">➡️</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
+    <!-- Selector de página -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <!-- Botón para retroceder página -->
+            <li class="page-item {% if current_page == 1 %}disabled{% endif %}">
+                <a class="page-link" href="?page={{ current_page|add:"-1" }}{% if query %}&query={{ query }}{% endif %}">
+                    ⬅️
+                </a>
+            </li>
 
-    <div class="d-flex justify-content-center" style="margin-bottom: 1%">
+            <!-- Botones numerados de paginación -->
+            {% for page_num in total_pages %}
+            <li class="page-item {% if current_page == page_num %}active{% endif %}">
+                <a class="page-link" href="?page={{ page_num }}{% if query %}&query={{ query }}{% endif %}">
+                    {{ page_num }}
+                </a>
+            </li>
+            {% endfor %}
+
+            <!-- Botón para avanzar página -->
+            <li class="page-item {% if current_page == total_pages|length %}disabled{% endif %}">
+                <a class="page-link" href="?page={{ current_page|add:"1" }}{% if query %}&query={{ query }}{% endif %}">
+                    ➡️
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+
+    
         <!-- Buscador del sitio -->
-        <form class="d-flex" action="{% url 'buscar' %}" method="POST">
+        <form class="d-flex mb-3" action="{% url 'search' %}" method="POST">
             {% csrf_token %}
-            <input class="form-control me-2" type="search" name="query" placeholder="Escribí una palabra" aria-label="Search">
+            <input class="form-control me-2" type="text" name="query" value="{{ query }}" placeholder="Buscar...">
             <button class="btn btn-outline-success" type="submit">Buscar</button>
         </form>
-    </div>
+    
 
     <div class="row row-cols-1 row-cols-md-3 g-4">
         {% if images|length == 0 %}
